@@ -3,7 +3,7 @@ import { Box, BoxProps } from '@mui/system'
 
 export const LineStyled = styled((props: BoxProps) => <Box {...props}></Box>)(
     () => ({
-        height: '100%',
+        height: '40px',
         width: '5px',
         borderRadius: '5px',
         marginRight: '14px',

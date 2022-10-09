@@ -13,7 +13,8 @@ export const StoreTodosContextProvider: FC<PropsWithChildren> = ({
             .fill('')
             .map<Todo>(() => ({
                 name: 'test',
-                description: 'test description',
+                description:
+                    'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore quae architecto expedita eligendi ad saepe ullam vel a neque magnam quo enim culpa consequatur, laudantium distinctio! Nam adipisci itaque praesentium!',
                 id: _.random(0, moment().valueOf()),
                 active: false,
                 date: moment().add(_.random(0, 5), 'days').toDate(),

@@ -4,8 +4,8 @@ import {
     Grid,
     List,
     ListItem,
+    ListItemIcon,
     ListItemText,
-    Switch,
     Typography,
 } from '@mui/material'
 import moment from 'moment'
@@ -15,6 +15,8 @@ import _ from 'lodash'
 import { constSystemMomentFormat } from '../utils'
 import { AccordionStyled } from '../hoc/Accordion'
 import { LineStyled } from '../hoc/Line'
+import { IOSSwitch } from '../hoc/Switch'
+import { ExpandMore } from '@mui/icons-material'
 
 export const Todos: FC<{
     todos: Todo[]
@@ -31,7 +33,7 @@ export const Todos: FC<{
             {todos.map((todo) => (
                 <ListItem
                     secondaryAction={
-                        <Switch
+                        <IOSSwitch
                             checked={todo.active}
                             onChange={(e) =>
                                 setActive(todo.id, e.target.checked)
@@ -40,46 +42,37 @@ export const Todos: FC<{
                     }
                     key={todo.id}
                 >
-                    <ListItemText>
-                        <Grid container>
-                            <Grid item>
-                                <LineStyled
-                                    sx={{
-                                        backgroundColor: todo.color,
-                                    }}
-                                ></LineStyled>
-                            </Grid>
-                            <Grid item>
-                                <Grid container flexDirection={'column'}>
-                                    <Grid item>
-                                        <Typography
-                                            sx={{
-                                                textDecoration: todo.active
-                                                    ? 'line-through'
-                                                    : null,
-                                                fontSize: '24px',
-                                                fontWeight: 600,
-                                            }}
-                                        >
-                                            {todo.name}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography
-                                            sx={{
-                                                fontSize: 14,
-                                                fontWeight: 600,
-                                            }}
-                                            color="text.secondary"
-                                            gutterBottom
-                                        >
-                                            {todo.description}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </ListItemText>
+                    <ListItemIcon>
+                        <LineStyled
+                            sx={{
+                                backgroundColor: todo.color,
+                            }}
+                        ></LineStyled>
+                    </ListItemIcon>
+
+                    <ListItemText
+                        primary={
+                            <Typography
+                                sx={{
+                                    textDecoration: todo.active
+                                        ? 'line-through'
+                                        : 'none',
+
+                                    fontSize: '24px',
+                                }}
+                            >
+                                {todo.name}
+                            </Typography>
+                        }
+                        secondary={todo.description}
+                        secondaryTypographyProps={{
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            paddingRight: '50px',
+                            fontSize: '14px',
+                        }}
+                    ></ListItemText>
                 </ListItem>
             ))}
         </List>
@@ -120,7 +113,26 @@ export const TodosWrapper: FC<{
                         constSystemMomentFormat(new Date()) === date
                     }
                 >
-                    <AccordionSummary>{date} Tasks</AccordionSummary>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                        <Grid container alignItems={'center'}>
+                            <Grid item>
+                                <LineStyled
+                                    sx={{ backgroundColor: '#A9A9A9' }}
+                                ></LineStyled>
+                            </Grid>
+                            <Grid item>
+                                <Typography
+                                    sx={{
+                                        fontWeight: 600,
+                                        fontSize: '24px',
+                                        lineHeight: '28px',
+                                    }}
+                                >
+                                    {moment(date).format('DD/MM')} Tasks
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </AccordionSummary>
                     <AccordionDetails>
                         <Todos
                             onActive={onActive}

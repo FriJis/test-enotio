@@ -1,8 +1,7 @@
 import {
+    AccordionSummary,
     AppBar,
     Box,
-    Card,
-    CardContent,
     Checkbox,
     Drawer,
     FormControlLabel,
@@ -11,7 +10,6 @@ import {
     List,
     ListItem,
     ListItemText,
-    Switch,
     Toolbar,
     Typography,
 } from '@mui/material'
@@ -31,6 +29,8 @@ import { Settings } from '@mui/icons-material'
 import { constSystemMomentFormat, getRandomValueFromArray } from '../utils'
 import { useQuery } from '@tanstack/react-query'
 import { API } from '../common/api'
+import { IOSSwitch } from '../hoc/Switch'
+import { AccordionStyled } from '../hoc/Accordion'
 
 export const Main: FC = () => {
     const [todos, setTodos] = useContext(StoreTodosContext)
@@ -86,12 +86,12 @@ export const Main: FC = () => {
                     <List>
                         <ListItem
                             secondaryAction={
-                                <Switch
+                                <IOSSwitch
                                     checked={showNews}
                                     onChange={(e) =>
                                         setShowNews(e.target.checked)
                                     }
-                                ></Switch>
+                                ></IOSSwitch>
                             }
                         >
                             <ListItemText>Show news</ListItemText>
@@ -99,7 +99,7 @@ export const Main: FC = () => {
                     </List>
                 </Box>
             </Drawer>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ boxShadow: 0 }}>
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Typography variant="h6">To Do</Typography>
                     <IconButton
@@ -122,11 +122,14 @@ export const Main: FC = () => {
                 </Grid>
                 <TodosWrapper todos={todos} onActive={setActive} />
                 {showNews && (
-                    <Card className="running-line" sx={{ marginTop: '10px' }}>
-                        <CardContent className="running-line__inner">
-                            {randomPost?.title}: {randomPost?.body}
-                        </CardContent>
-                    </Card>
+                    <AccordionStyled>
+                        <AccordionSummary className="running-line">
+                            <Box className="running-line__inner">
+                                {' '}
+                                {randomPost?.title}: {randomPost?.body}
+                            </Box>
+                        </AccordionSummary>
+                    </AccordionStyled>
                 )}
             </Container>
         </>
