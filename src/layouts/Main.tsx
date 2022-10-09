@@ -3,6 +3,7 @@ import {
     Box,
     Card,
     CardContent,
+    Checkbox,
     Drawer,
     FormControlLabel,
     Grid,
@@ -10,7 +11,6 @@ import {
     List,
     ListItem,
     ListItemText,
-    Radio,
     Switch,
     Toolbar,
     Typography,
@@ -24,7 +24,7 @@ import {
     useMemo,
     useState,
 } from 'react'
-import { TodoWrappers } from '../components/Todo'
+import { TodosWrapper } from '../components/Todo'
 import { StoreTodosContext } from '../ctx/store'
 import { Post, Todo } from '../types/main'
 import { Settings } from '@mui/icons-material'
@@ -114,11 +114,13 @@ export const Main: FC = () => {
             <Container sx={{ marginTop: '10px' }}>
                 <Grid container>
                     <FormControlLabel
-                        control={<Radio checked={todayIsCompleted} disabled />}
+                        control={
+                            <Checkbox checked={todayIsCompleted} disabled />
+                        }
                         label="Today tasks:"
                     />
                 </Grid>
-                <TodoWrappers todos={todos} onActive={setActive} />
+                <TodosWrapper todos={todos} onActive={setActive} />
                 {showNews && (
                     <Card className="running-line" sx={{ marginTop: '10px' }}>
                         <CardContent className="running-line__inner">

@@ -1,5 +1,4 @@
 import {
-    Accordion,
     AccordionDetails,
     AccordionSummary,
     Grid,
@@ -9,12 +8,13 @@ import {
     Switch,
     Typography,
 } from '@mui/material'
-import { Box } from '@mui/system'
 import moment from 'moment'
 import { FC, useCallback, useMemo } from 'react'
 import { Todo } from '../types/main'
 import _ from 'lodash'
 import { constSystemMomentFormat } from '../utils'
+import { AccordionStyled } from '../hoc/Accordion'
+import { LineStyled } from '../hoc/Line'
 
 export const Todos: FC<{
     todos: Todo[]
@@ -43,24 +43,22 @@ export const Todos: FC<{
                     <ListItemText>
                         <Grid container>
                             <Grid item>
-                                <Box
+                                <LineStyled
                                     sx={{
-                                        height: '100%',
-                                        width: '2px',
                                         backgroundColor: todo.color,
-                                        marginRight: '5px',
                                     }}
-                                ></Box>
+                                ></LineStyled>
                             </Grid>
                             <Grid item>
                                 <Grid container flexDirection={'column'}>
                                     <Grid item>
                                         <Typography
-                                            variant={'h5'}
                                             sx={{
                                                 textDecoration: todo.active
                                                     ? 'line-through'
                                                     : null,
+                                                fontSize: '24px',
+                                                fontWeight: 600,
                                             }}
                                         >
                                             {todo.name}
@@ -68,7 +66,10 @@ export const Todos: FC<{
                                     </Grid>
                                     <Grid item>
                                         <Typography
-                                            sx={{ fontSize: 14 }}
+                                            sx={{
+                                                fontSize: 14,
+                                                fontWeight: 600,
+                                            }}
                                             color="text.secondary"
                                             gutterBottom
                                         >
@@ -85,7 +86,7 @@ export const Todos: FC<{
     )
 }
 
-export const TodoWrappers: FC<{
+export const TodosWrapper: FC<{
     todos: Todo[]
     onActive?: (id: number, value: boolean) => void
 }> = ({ todos, onActive }) => {
@@ -113,7 +114,7 @@ export const TodoWrappers: FC<{
     return (
         <>
             {dates.map((date) => (
-                <Accordion
+                <AccordionStyled
                     key={date}
                     defaultExpanded={
                         constSystemMomentFormat(new Date()) === date
@@ -126,7 +127,7 @@ export const TodoWrappers: FC<{
                             todos={collectionByDate.get(date) || []}
                         ></Todos>
                     </AccordionDetails>
-                </Accordion>
+                </AccordionStyled>
             ))}
         </>
     )
