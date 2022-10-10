@@ -83,17 +83,15 @@ export const TodosWrapper: FC<{
     todos: Todo[]
     onActive?: (id: number, value: boolean) => void
 }> = ({ todos, onActive }) => {
-    const dates = useMemo(
-        () =>
-            Array.from(
-                new Set(
-                    _.sortBy(todos, (todo) => moment(todo.date).valueOf())
-                        .map((todo) => constSystemMomentFormat(todo.date))
-                        .values()
+    const dates = useMemo(() => {
+        return Array.from(
+            new Set(
+                _.sortBy(todos, (todo) => moment(todo.date).valueOf()).map(
+                    (todo) => constSystemMomentFormat(todo.date)
                 )
-            ),
-        [todos]
-    )
+            )
+        )
+    }, [todos])
 
     const collectionByDate = useMemo(() => {
         return todos.reduce<Map<string, Todo[]>>((acc, todo) => {
